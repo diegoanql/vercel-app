@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3D1424">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Nosotros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Outfit:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--paper:#F6ECEA;--card:#FFFDFC;--ink:#3D1424;--soft:#8A6170;--red:#D7263D;--sage:#7E9C83;--gold:#E3A83B;--line:#E7D3D0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:'Gloock',Georgia,serif;font-weight:400;line-height:1.15}
+h1{font-size:2rem}h2{font-size:1.55rem;margin-bottom:6px}h3{font-size:1.15rem}
+a{color:var(--red)}
+main{max-width:560px;margin:0 auto;padding:22px 18px 120px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.center{text-align:center}
+.muted{color:var(--soft);font-size:.9rem}
+.hand{font-family:'Caveat',cursive}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button{cursor:pointer}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:11px 18px;font:inherit;font-weight:500}
+.btn.red{background:var(--red)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.small{padding:6px 13px;font-size:.88rem}
+.btn:disabled{opacity:.4}
+.link{background:none;border:0;font:inherit;color:var(--soft);text-decoration:underline;font-size:.85rem}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:1000}
+nav.tabs button{background:none;border:0;font:inherit;font-size:.72rem;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 10px}
+nav.tabs .ic{font-size:1.3rem;filter:grayscale(1);opacity:.7}
+nav.tabs button.on{color:var(--red);font-weight:600}
+nav.tabs button.on .ic{filter:none;opacity:1}
+.polaroid{background:#fff;padding:9px 9px 0;box-shadow:0 6px 18px rgba(61,20,36,.16);position:relative;cursor:pointer}
+.polaroid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--line)}
+.polaroid .cap{font-family:'Caveat',cursive;font-size:1.2rem;text-align:center;padding:5px 4px 8px;line-height:1.15;min-height:2.3em;overflow:hidden}
+.tape::before{content:'';position:absolute;top:-11px;left:50%;width:84px;height:22px;transform:translateX(-50%) rotate(-3deg);background:rgba(227,168,59,.55);z-index:1}
+.hero{width:76%;margin:20px auto 6px;transform:rotate(-2.5deg)}
+.hero .cap{font-size:1.45rem}
+.empty-photo{width:100%;aspect-ratio:1;display:grid;place-items:center;background:var(--line);font-size:3rem}
+.days{text-align:center;font-family:'Caveat',cursive;font-size:2rem;margin-top:18px;line-height:1.1}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 14px}
+.grid .polaroid:nth-child(odd){transform:rotate(-1.4deg)}
+.grid .polaroid:nth-child(even){transform:rotate(1.2deg)}
+.row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font:inherit;color:inherit}
+.row .ic{font-size:1.35rem;width:2rem;text-align:center;flex:none}
+.row .grow{flex:1;min-width:0}
+.row .end{color:var(--soft);font-size:.88rem;white-space:nowrap}
+.sec{margin-top:28px}
+.alert{background:var(--red);color:#fff;border-radius:14px;padding:12px 14px;margin:10px 0}
+.alert .btn.ghost{color:#fff;border-color:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:6px 0 12px;padding-bottom:4px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font:inherit;font-size:.9rem;white-space:nowrap;color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.timeline{border-left:2px dashed var(--red);margin:8px 0 0 8px;padding-left:20px}
+.timeline .item{position:relative;margin-bottom:24px}
+.timeline .item::before{content:'♥';position:absolute;left:-29px;top:-2px;color:var(--red);background:var(--paper);padding:2px 0}
+.timeline p{margin-top:4px;white-space:pre-wrap}
+.coupon{background:var(--card);border:2px dashed var(--gold);border-radius:16px;padding:16px;margin-bottom:14px}
+.coupon h3{font-size:1.3rem}
+.coupon.used{opacity:.5}
+.score{display:flex;gap:12px;margin:8px 0}
+.score div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.score b{font-family:'Gloock',serif;font-weight:400;font-size:2.2rem;display:block;line-height:1.1}
+.locked{opacity:.4}
+.done{text-decoration:line-through;color:var(--soft)}
+.story{margin-top:16px}
+.story p{font-family:'Caveat',cursive;font-size:1.35rem;line-height:1.25;margin-top:4px}
+#map{height:calc(100dvh - 300px);min-height:300px;border-radius:16px;overflow:hidden;border:1px solid var(--line);z-index:0}
+.pin-photo{width:46px;height:46px;border:3px solid #fff;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pin-photo img{width:100%;height:100%;object-fit:cover}
+.pin-heart{font-size:34px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.msgs{display:flex;flex-direction:column;gap:6px;height:calc(100dvh - 235px);overflow-y:auto;padding:4px 2px}
+.msg{max-width:80%;padding:8px 13px;border-radius:18px 18px 18px 4px;background:var(--card);border:1px solid var(--line);align-self:flex-start;white-space:pre-wrap;word-wrap:break-word}
+.msg.me{align-self:flex-end;background:var(--ink);color:#fff;border-color:var(--ink);border-radius:18px 18px 4px 18px}
+.msg small{display:block;opacity:.6;font-size:.7rem;margin-top:2px}
+.sendbar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;padding:8px 18px;background:var(--paper);display:flex;gap:8px}
+.fab{position:fixed;right:max(18px,calc(50% - 262px));bottom:calc(78px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:var(--red);color:#fff;font-size:2rem;line-height:1;border:0;box-shadow:0 6px 16px rgba(215,38,61,.4);z-index:1001}
+#modal{position:fixed;inset:0;background:rgba(61,20,36,.45);display:none;align-items:flex-end;justify-content:center;z-index:2000}
+#modal.open{display:flex}
+#modal .sheet{background:var(--card);width:100%;max-width:560px;max-height:92dvh;overflow:auto;border-radius:22px 22px 0 0;padding:22px 18px calc(26px + env(safe-area-inset-bottom));position:relative}
+#modal .x{position:absolute;top:12px;right:14px;background:none;border:0;font-size:1.3rem;color:var(--soft)}
+label{display:block;font-size:.9rem;color:var(--soft);margin:12px 0 4px}
+label.check{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:1rem}
+label.check input{width:auto}
+input,textarea,select{width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{resize:vertical}
+#toast{position:fixed;left:50%;bottom:calc(140px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;transition:opacity .25s;z-index:3000;pointer-events:none;font-size:.95rem;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+.login{min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:30px;max-width:420px;margin:0 auto}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="toast" role="status"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script type="module">
+/* =========================================================
+   1) PEGA AQUÍ LOS DATOS DE TU PROYECTO DE SUPABASE
+   (Project Settings → API: "Project URL" y la clave "anon" o "publishable").
+   Mientras diga "PEGA_AQUI", la app corre en modo demo.
+   Esta clave puede ser pública: lo que protege los datos son las reglas del archivo setup.sql.
+   ========================================================= */
+const SUPABASE_URL = "https://cwxvusohsjbsgmxahrnj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_RplY9WPOV_M44rVKfpk9ZQ_TmHYh5fs";
+const DEMO = SUPABASE_URL === "PEGA_AQUI";
+
+const COLS = ['fotos','recuerdos','fechas','planes','chat','canciones','cupones','premios','puntos','pareja'];
+const S = { user:null, view:'inicio', shell:false, booted:false, unlocked:false, mapPick:null, planTab:'cita', cupTab:'mios', notified:false,
+  info:{}, data:Object.fromEntries(COLS.map(c=>[c,[]])) };
+let Store, authApi, map, unsubs = [];
+
+/* ---------- utilidades ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ymd = (d=new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseD = s => { const [y,m,d] = String(s).split('-').map(Number); return new Date(y, m-1, d); };
+const daysBetween = (a,b) => Math.round((b-a)/864e5);
+const fmt = s => s ? parseD(s).toLocaleDateString('es-VE',{day:'numeric',month:'long',year:'numeric'}) : '';
+const fmtShort = s => s ? parseD(s).toLocaleDateString('es-VE',{day:'numeric',month:'short'}) : '';
+const hora = ts => new Date(ts).toLocaleString('es-VE',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
+const me = () => S.user.uid;
+const nameOf = uid => S.data.puntos.find(p=>p.id===uid)?.name || (uid===me() ? 'Tú' : 'Mi amor');
+const partner = () => S.data.puntos.find(p=>p.id!==me());
+const ptsOf = uid => S.data.puntos.find(p=>p.id===uid)?.pts || 0;
+const byDateDesc = (a,b) => (b.date||b.fecha||'').localeCompare(a.date||a.fecha||'') || (b.createdAt||0)-(a.createdAt||0);
+const visibleFotos = () => S.data.fotos.filter(f=>!f.hidden).sort(byDateDesc);
+const empty = t => `<p class="muted" style="padding:30px 0;text-align:center">${t}</p>`;
+
+function toast(t){ const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),2600); }
+function modal(html){ const m=$('#modal'); m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Cerrar">✕</button>${html}</div>`; m.classList.add('open'); }
+function closeModal(){ $('#modal').classList.remove('open'); $('#modal').innerHTML=''; }
+async function award(n, why){ await Store.incr('puntos', me(), 'pts', n); toast(`+${n} puntos ${why}`); }
+async function sha(s){ const b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nosotros:'+s)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+
+function compress(file, max, q){
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, max/Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width*s); c.height = Math.round(img.height*s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src); res(c.toDataURL('image/jpeg', q));
+    };
+    img.onerror = rej; img.src = URL.createObjectURL(file);
+  });
+}
+
+function nextOcc(f){
+  if(!f.fecha) return null;
+  const d = parseD(f.fecha), t = parseD(ymd());
+  if(f.anual){ d.setFullYear(t.getFullYear()); if(d < t) d.setFullYear(t.getFullYear()+1); }
+  return d;
+}
+function fechasConDias(){
+  const t = parseD(ymd());
+  return S.data.fechas.map(f => ({...f, dias: nextOcc(f) ? daysBetween(t, nextOcc(f)) : -1})).filter(f=>f.dias>=0).sort((a,b)=>a.dias-b.dias);
+}
+const alertFechas = () => fechasConDias().filter(f => f.dias <= (+f.aviso || 7));
+function checkAlerts(){
+  if(S.notified || !('Notification' in window) || Notification.permission !== 'granted') return;
+  const a = alertFechas(); if(!a.length) return;
+  S.notified = true;
+  a.forEach(f => { try{ new Notification(f.dias ? `Faltan ${f.dias} días` : '¡Es hoy!', {body:f.titulo}); }catch(e){} });
+}
+function gcal(titulo, fecha, anual, horaStr){
+  const d = parseD(fecha); let dates;
+  if(horaStr){ const [h,m]=horaStr.split(':'); d.setHours(+h, +m); const e=new Date(d.getTime()+2*36e5);
+    const z = x => ymd(x).replace(/-/g,'')+'T'+String(x.getHours()).padStart(2,'0')+String(x.getMinutes()).padStart(2,'0')+'00';
+    dates = z(d)+'/'+z(e);
+  } else { const e=new Date(d); e.setDate(e.getDate()+1); dates = ymd(d).replace(/-/g,'')+'/'+ymd(e).replace(/-/g,''); }
+  const u = new URLSearchParams({action:'TEMPLATE', text:titulo, dates, details:'Desde nuestra app ♥'});
+  if(anual) u.set('recur','RRULE:FREQ=YEARLY');
+  return 'https://calendar.google.com/calendar/render?'+u;
+}
+
+/* ---------- backend: Supabase o demo ---------- */
+async function initBackend(){
+  if(DEMO){ Store = demoStore(); authApi = { logout: async()=>{ S.user=null; S.booted=false; renderLogin(); } }; renderLogin(); return; }
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+  const cache = {}, subs = {}; let channel = null;
+  const toDoc = r => ({...r.data, id:r.id, createdAt:r.created_at});
+  const emit = c => (subs[c]||[]).forEach(f => f(Object.values(cache[c]||{}).map(d => ({...d}))));
+  const put = (c, d) => { (cache[c] ??= {})[d.id] = d; emit(c); };
+  const fail = e => { if(e){ console.error(e); toast('No se pudo guardar. Revisa la conexión o el setup de Supabase'); throw e; } };
+  Store = {
+    start(){
+      channel = sb.channel('items').on('postgres_changes', {event:'*', schema:'public', table:'items'}, p => {
+        if(p.eventType === 'DELETE'){ const o = p.old; if(cache[o.col]){ delete cache[o.col][o.id]; emit(o.col); } }
+        else put(p.new.col, toDoc(p.new));
+      }).subscribe();
+    },
+    stop(){ if(channel) sb.removeChannel(channel); channel = null; for(const k in subs) delete subs[k]; for(const k in cache) delete cache[k]; },
+    listen(col, cb, last){
+      (subs[col] ??= []).push(cb);
+      sb.from('items').select('*').eq('col', col).order('created_at', {ascending:false}).limit(last || 5000).then(({data, error}) => {
+        if(error) return toast('Error de permisos: revisa el setup.sql de Supabase');
+        cache[col] = Object.fromEntries(data.map(r => [r.id, toDoc(r)])); emit(col);
+      });
+      return () => subs[col] = (subs[col]||[]).filter(f => f !== cb);
+    },
+    async add(col, data){
+      const id = crypto.randomUUID(), created_at = Date.now();
+      put(col, {...data, id, createdAt:created_at});
+      const {error} = await sb.from('items').insert({col, id, data, created_at}); fail(error); return id;
+    },
+    async update(col, id, data){
+      put(col, {...(cache[col]?.[id] || {id}), ...data});
+      const {error} = await sb.rpc('merge_item', {p_col:col, p_id:id, p_data:data}); fail(error);
+    },
+    set(col, id, data){ return Store.update(col, id, data); },
+    async remove(col, id){
+      if(cache[col]){ delete cache[col][id]; emit(col); }
+      const {error} = await sb.from('items').delete().eq('col', col).eq('id', id); fail(error);
+    },
+    async get(col, id){ const {data} = await sb.from('items').select('*').eq('col', col).eq('id', id).maybeSingle(); return data ? toDoc(data) : null; },
+    async incr(col, id, field, n){
+      const cur = cache[col]?.[id] || {id}; put(col, {...cur, [field]:(cur[field]||0)+n});
+      const {error} = await sb.rpc('incr_item', {p_col:col, p_id:id, p_field:field, p_n:n}); fail(error);
+    },
+    async uploadFull(id, blob){ const {error} = await sb.storage.from('fotos').upload(id+'.jpg', blob, {contentType:'image/jpeg', upsert:true}); fail(error); },
+    async fullUrl(id){ const {data} = await sb.storage.from('fotos').createSignedUrl(id+'.jpg', 3600); return data?.signedUrl || null; },
+    async removeFull(id){ await sb.storage.from('fotos').remove([id+'.jpg']); },
+  };
+  authApi = {
+    login: async (email, password) => { const {error} = await sb.auth.signInWithPassword({email, password}); if(error) throw error; },
+    logout: () => sb.auth.signOut(),
+  };
+  sb.auth.onAuthStateChange((ev, session) => {
+    const u = session?.user;
+    setTimeout(() => {
+      if(u){ if(S.user?.uid !== u.id){ S.user = {uid:u.id}; S.booted = false; boot(); } }
+      else { S.user = null; S.booted = false; Store.stop(); renderLogin(); }
+    }, 0);
+  });
+}
+
+function demoStore(){
+  const mem = Object.fromEntries(COLS.map(c=>[c,[]])), subs = {};
+  const col = c => (mem[c] ??= []);
+  const emit = c => (subs[c]||[]).forEach(f => f(col(c).map(d=>({...d}))));
+  const find = (c,id) => col(c).find(d=>d.id===id);
+  seed(mem);
+  return {
+    listen(c, cb){ (subs[c] ??= []).push(cb); cb(col(c).map(d=>({...d}))); return () => subs[c] = subs[c].filter(f=>f!==cb); },
+    async add(c, data){ const id = Math.random().toString(36).slice(2,10); col(c).push({id, ...data, createdAt:Date.now()}); emit(c); return id; },
+    async update(c, id, data){ Object.assign(find(c,id)||{}, data); emit(c); },
+    async remove(c, id){ mem[c] = col(c).filter(d=>d.id!==id); emit(c); },
+    async get(c, id){ const d = find(c,id); return d ? {...d} : null; },
+    async set(c, id, data){ const d = find(c,id); d ? Object.assign(d, data) : col(c).push({id, ...data}); emit(c); },
+    async incr(c, id, f, n){ const d = find(c,id); d ? d[f] = (d[f]||0)+n : col(c).push({id, [f]:n}); emit(c); },
+    async uploadFull(){}, async fullUrl(){ return null; }, async removeFull(){},
+  };
+}
+function seed(m){
+  const t = new Date(), d = n => { const x = new Date(); x.setDate(x.getDate()+n); return ymd(x); };
+  const ini = ymd(new Date(t.getFullYear()-2, t.getMonth(), t.getDate()+5));
+  const ph = (a,b,e) => 'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="100" height="100" fill="url(#g)"/><text x="50" y="62" font-size="32" text-anchor="middle">${e}</text></svg>`);
+  m.pareja.push({id:'info', inicio:ini, lugar:{lat:10.6766, lng:-71.6047, nombre:'Vereda del Lago', historia:'Una caminata que se alargó hasta el atardecer. Ahí empezó todo.'}});
+  m.puntos.push({id:'u1', name:'Diego', pts:45}, {id:'u2', name:'Mi amor', pts:60});
+  [['#F4A6B7','#D7263D','🌅','Atardecer en el lago',d(-3),10.6766,-71.6047,false],
+   ['#B8D0BD','#7E9C83','🌴','Nuestra primera playa',d(-60),11.17,-71.80,false],
+   ['#F7D488','#E3A83B','🍝','Cena de aniversario',d(-120),10.66,-71.62,false],
+   ['#C9B6E4','#8A6170','🎡','La feria',d(-200),null,null,false],
+   ['#3D1424','#8A6170','🤫','Solo nuestra',d(-10),null,null,true]]
+   .forEach(([a,b,e,cap,date,lat,lng,hidden],i) => m.fotos.push({id:'f'+i, thumb:ph(a,b,e), caption:cap, date, lat, lng, hidden, by:'u1', createdAt:i}));
+  m.recuerdos.push({id:'r1', titulo:'El día que nos conocimos', fecha:ini, texto:'Llegamos tarde los dos y terminamos riéndonos de eso toda la noche.'},
+                   {id:'r2', titulo:'Primer viaje juntos', fecha:d(-60), texto:'Se nos olvidó el protector solar. Nunca más.'});
+  m.fechas.push({id:'d1', titulo:'Nuestro aniversario', fecha:ini, anual:true, aviso:7}, {id:'d2', titulo:'Su cumpleaños', fecha:d(40), anual:true, aviso:15});
+  m.planes.push({id:'p1', tipo:'cita', titulo:'Cena en un sitio nuevo', fecha:d(3), hora:'19:30', lugar:'Por decidir', estado:'planeado'},
+                {id:'p2', tipo:'viaje', titulo:'Mérida en diciembre', estado:'idea', notas:'Teleférico y fresas con crema'},
+                {id:'p3', tipo:'futuro', titulo:'Nuestra casa con patio', estado:'idea'},
+                {id:'p4', tipo:'romantico', titulo:'Picnic sorpresa', estado:'idea'},
+                {id:'p5', tipo:'cita', titulo:'Cine y helado', fecha:d(-15), estado:'hecho'});
+  m.canciones.push({id:'c1', titulo:'La de nuestra primera cita', artista:'Pon aquí el artista', nota:'Sonaba en el carro esa noche', link:''});
+  m.cupones.push({id:'k1', titulo:'Vale por un masaje de 20 minutos', desc:'Sin quejas y sin mirar el reloj.', de:'u2', canjeado:false},
+                 {id:'k2', titulo:'Vale por un desayuno en la cama', desc:'Con café como te gusta.', de:'u1', canjeado:false});
+  m.premios.push({id:'q1', titulo:'Noche de película: tú eliges', costo:50}, {id:'q2', titulo:'El otro cocina toda la semana', costo:150});
+  m.chat.push({id:'m1', text:'¿Ya viste lo que te dejé en cupones? 😏', by:'u2', createdAt:Date.now()-36e5},
+              {id:'m2', text:'Lo voy a canjear hoy mismo', by:'u1', createdAt:Date.now()-30e5});
+}
+
+/* ---------- arranque ---------- */
+function boot(){
+  if(S.booted) return; S.booted = true;
+  $('#app').innerHTML = '<main id="main"></main><nav class="tabs" id="tabs" aria-label="Secciones"></nav>';
+  S.shell = true; S.view = 'inicio';
+  Store.start?.();
+  COLS.forEach(c => unsubs.push(Store.listen(c, docs => onData(c, docs), c==='chat' ? 300 : 0)));
+  Store.incr('puntos', me(), 'pts', 0);
+  render();
+}
+function onData(c, docs){
+  S.data[c] = docs;
+  if(c === 'pareja') S.info = docs.find(d=>d.id==='info') || {};
+  if(c === 'fechas') checkAlerts();
+  if(!S.shell || !$('#main')) return;
+  if(S.view === 'chat'){ if(c==='chat') renderMsgs(); return; }
+  if(S.view === 'mapa' && !['fotos','pareja'].includes(c)) return;
+  render();
+}
+
+function renderLogin(){
+  S.shell = false;
+  $('#app').innerHTML = `<div class="login">
+    <h1 style="font-size:2.8rem">Nosotros</h1>
+    <p class="hand" style="font-size:1.6rem;margin-bottom:22px">nuestro rincón privado</p>
+    ${DEMO ? `<p class="muted">Modo demostración: nada se guarda. Conecta Supabase para usarla de verdad.</p>
+      <div class="actions"><button class="btn red" data-act="demo" data-u="u1">Entrar como Diego</button><button class="btn ghost" data-act="demo" data-u="u2">Entrar como mi amor</button></div>`
+    : `<label for="li-e">Correo</label><input id="li-e" type="email" autocomplete="email">
+      <label for="li-p">Contraseña</label><input id="li-p" type="password" autocomplete="current-password">
+      <div class="actions"><button class="btn red" data-act="login">Entrar</button></div><p id="li-err" class="muted" style="margin-top:10px"></p>`}
+  </div>`;
+}
+
+/* ---------- vistas ---------- */
+const MAS = [['recuerdos','📖','Recuerdos'],['fechas','🗓️','Fechas importantes'],['mapa','🗺️','Nuestro mapa'],['canciones','🎵','Nuestras canciones'],['cupones','🎟️','Cupones'],['recompensas','🏆','Recompensas'],['ajustes','⚙️','Ajustes']];
+const TABS = [['inicio','🏠','Inicio'],['album','📷','Álbum'],['planes','✈️','Planes'],['chat','💬','Chat'],['mas','✨','Más']];
+const TIPOS = {cita:'Citas', viaje:'Viajes', futuro:'Futuro', romantico:'Románticos'};
+
+function render(){
+  const v = VIEWS[S.view] || VIEWS.inicio;
+  if(map){ map.remove(); map = null; }
+  $('#main').innerHTML = v();
+  const tab = TABS.some(t=>t[0]===S.view) ? S.view : (S.view==='ocultas' ? 'album' : 'mas');
+  $('#tabs').innerHTML = TABS.map(([id,ic,t]) => `<button data-act="go" data-v="${id}" class="${tab===id?'on':''}" ${tab===id?'aria-current="page"':''}><span class="ic">${ic}</span>${t}</button>`).join('');
+  if(S.view === 'mapa') initMap();
+  if(S.view === 'chat') renderMsgs();
+}
+function go(v){ S.view = v; render(); window.scrollTo(0,0); }
+
+const polaroid = f => `<figure class="polaroid" data-act="foto" data-id="${f.id}"><img src="${f.thumb}" alt="${esc(f.caption)}" loading="lazy"><figcaption class="cap">${esc(f.caption || fmt(f.date))}</figcaption></figure>`;
+
+const VIEWS = {
+  inicio(){
+    const f = visibleFotos()[0], ini = S.info.inicio, p = partner();
+    const dias = ini ? daysBetween(parseD(ini), parseD(ymd())) : null;
+    const prox = fechasConDias()[0];
+    const plan = S.data.planes.filter(x => x.estado!=='hecho' && x.fecha && x.fecha>=ymd()).sort((a,b)=>a.fecha.localeCompare(b.fecha))[0];
+    return `<div class="top"><h1>${esc(nameOf(me()))}${p ? ' &amp; '+esc(p.name||'mi amor') : ''}</h1></div>
+      ${alertFechas().map(a => `<div class="alert">${a.dias===0 ? 'Hoy es' : a.dias===1 ? 'Mañana es' : `En ${a.dias} días es`} <b>${esc(a.titulo)}</b></div>`).join('')}
+      <figure class="polaroid tape hero" data-act="${f?'foto':'go'}" data-id="${f?.id||''}" data-v="album">
+        ${f ? `<img src="${f.thumb}" alt="${esc(f.caption)}">` : '<div class="empty-photo">♡</div>'}
+        <figcaption class="cap">${f ? esc(f.caption || fmt(f.date)) : 'Toca para subir su primera foto'}</figcaption>
+      </figure>
+      ${dias !== null ? `<p class="days">Llevamos ${dias.toLocaleString('es-VE')} días juntos</p><p class="muted center">desde el ${fmt(ini)}</p>`
+        : `<p class="days" data-act="go" data-v="ajustes" style="cursor:pointer">¿Desde cuándo están juntos?</p><p class="muted center">Toca para poner la fecha</p>`}
+      <div class="sec"><h3>Lo que viene</h3>
+        ${prox ? `<button class="row" data-act="go" data-v="fechas"><span class="ic">🗓️</span><span class="grow">${esc(prox.titulo)}</span><span class="end">${prox.dias ? 'en '+prox.dias+' días' : 'hoy'}</span></button>` : ''}
+        ${plan ? `<button class="row" data-act="verPlan" data-id="${plan.id}"><span class="ic">✈️</span><span class="grow">${esc(plan.titulo)}</span><span class="end">${fmtShort(plan.fecha)}${plan.hora ? ', '+plan.hora : ''}</span></button>` : ''}
+        ${!prox && !plan ? `<p class="muted" style="padding:10px 0">Nada agendado todavía. <button class="link" data-act="go" data-v="planes">Planear algo</button></p>` : ''}
+      </div>
+      <div class="sec"><h3>Donde empezó todo</h3>
+        <button class="row" data-act="go" data-v="mapa"><span class="ic">❤️</span><span class="grow">${S.info.lugar ? esc(S.info.lugar.nombre) : 'Márcalo en el mapa'}</span><span class="end">Ver mapa</span></button>
+      </div>`;
+  },
+
+  album(){ return albumView(visibleFotos(), 'Álbum', false); },
+  ocultas(){ return S.unlocked ? albumView(S.data.fotos.filter(f=>f.hidden).sort(byDateDesc), 'Fotos ocultas', true) : (S.view='album', VIEWS.album()); },
+
+  mapa(){
+    const p = S.mapPick, l = S.info.lugar;
+    return `<div class="top"><h1>Nuestro mapa</h1></div>
+      ${p ? `<div class="alert">Toca el mapa para ${p.type==='inicio' ? 'marcar dónde empezó todo' : 'ubicar la foto'}.
+        <div class="actions" style="margin-top:8px">${p.type==='foto' ? '<button class="btn small ghost" data-act="miUbic">Usar mi ubicación</button>' : ''}<button class="btn small ghost" data-act="cancelPick">Cancelar</button></div></div>` : ''}
+      <div id="map"></div>
+      ${!p ? `<div class="actions"><button class="btn ghost small" data-act="pickInicio">❤️ ${l ? 'Cambiar' : 'Marcar'} dónde empezó todo</button></div>` : ''}
+      ${l ? `<div class="story"><h3>${esc(l.nombre)}</h3><p>${esc(l.historia)}</p></div>` : ''}
+      <p class="muted" style="margin-top:10px">Para poner una foto en el mapa, ábrela en el álbum y toca "Ubicar en el mapa".</p>`;
+  },
+
+  recuerdos(){
+    const r = [...S.data.recuerdos].sort(byDateDesc);
+    return `<div class="top"><h1>Recuerdos</h1></div>
+      ${r.length ? `<div class="timeline">${r.map(x => `<div class="item"><p class="muted">${fmt(x.fecha)}</p><h3>${esc(x.titulo)}</h3><p>${esc(x.texto)}</p><button class="link" data-act="del" data-c="recuerdos" data-id="${x.id}">Eliminar</button></div>`).join('')}</div>`
+        : empty('Escriban aquí los momentos que no quieren olvidar.')}
+      <button class="fab" data-act="form" data-f="recuerdo" aria-label="Nuevo recuerdo">+</button>`;
+  },
+
+  fechas(){
+    const f = fechasConDias(), pasadas = S.data.fechas.filter(x => !f.some(y=>y.id===x.id));
+    const canNotify = 'Notification' in window && Notification.permission === 'default';
+    return `<div class="top"><h1>Fechas importantes</h1></div>
+      ${canNotify ? `<div class="alert">Activa los avisos para que la app les recuerde las fechas cuando la abran.<div class="actions" style="margin-top:8px"><button class="btn small ghost" data-act="notif">Activar avisos</button></div></div>` : ''}
+      ${f.length ? f.map(x => `<div class="row" style="cursor:default"><span class="ic">${x.dias<=(+x.aviso||7) ? '🔔' : '🗓️'}</span>
+          <span class="grow"><b>${esc(x.titulo)}</b><br><span class="muted">${fmtShort(ymd(nextOcc(x)))}${x.anual ? ', cada año' : ''}</span><br>
+          <a href="${gcal(x.titulo, ymd(nextOcc(x)), x.anual)}" target="_blank" rel="noopener" class="muted">Agregar a Google Calendar</a>
+          <button class="link" data-act="del" data-c="fechas" data-id="${x.id}">Eliminar</button></span>
+          <span class="end">${x.dias===0 ? '¡Hoy!' : x.dias===1 ? 'mañana' : 'en '+x.dias+' días'}</span></div>`).join('')
+        : empty('Agreguen aniversarios, cumpleaños y cualquier fecha que quieran celebrar.')}
+      ${pasadas.length ? `<div class="sec"><h3>Ya pasaron</h3>${pasadas.map(x=>`<div class="row" style="cursor:default"><span class="ic">✓</span><span class="grow done">${esc(x.titulo)}</span><button class="link" data-act="del" data-c="fechas" data-id="${x.id}">Eliminar</button></div>`).join('')}</div>` : ''}
+      <p class="muted" style="margin-top:14px">"Agregar a Google Calendar" hace que el teléfono les avise aunque la app esté cerrada.</p>
+      <button class="fab" data-act="form" data-f="fecha" aria-label="Nueva fecha">+</button>`;
+  },
+
+  planes(){
+    const all = S.data.planes.filter(p => (p.tipo||'cita') === S.planTab);
+    const pend = all.filter(p=>p.estado!=='hecho').sort((a,b)=>(a.fecha||'9999').localeCompare(b.fecha||'9999'));
+    const hechos = all.filter(p=>p.estado==='hecho').sort(byDateDesc);
+    const row = p => `<button class="row" data-act="verPlan" data-id="${p.id}"><span class="ic">${p.estado==='hecho' ? '✓' : p.estado==='planeado' ? '📌' : '💭'}</span>
+      <span class="grow ${p.estado==='hecho'?'done':''}">${esc(p.titulo)}${p.lugar ? `<br><span class="muted">${esc(p.lugar)}</span>` : ''}</span>
+      <span class="end">${p.fecha ? fmtShort(p.fecha) + (p.hora ? ', '+p.hora : '') : (p.estado==='idea' ? 'idea' : '')}</span></button>`;
+    return `<div class="top"><h1>Planes</h1></div>
+      <div class="chips" role="tablist">${Object.entries(TIPOS).map(([k,t]) => `<button class="chip ${S.planTab===k?'on':''}" data-act="planTab" data-t="${k}" role="tab" aria-selected="${S.planTab===k}">${t}</button>`).join('')}</div>
+      ${pend.length ? pend.map(row).join('') : empty('Nada por aquí todavía. Toca + para agregar un plan.')}
+      ${hechos.length ? `<div class="sec"><h3>Ya lo cumplimos</h3>${hechos.map(row).join('')}</div>` : ''}
+      <button class="fab" data-act="form" data-f="plan" aria-label="Nuevo plan">+</button>`;
+  },
+
+  chat(){
+    return `<div class="top"><h1>Chat</h1><span class="muted">Solo ustedes dos</span></div>
+      <div class="msgs" id="msgs" aria-live="polite"></div>
+      <div class="sendbar"><input id="msg" placeholder="Escribe algo bonito…" autocomplete="off" aria-label="Mensaje"><button class="btn red" data-act="send" aria-label="Enviar">➤</button></div>`;
+  },
+
+  canciones(){
+    const c = [...S.data.canciones].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    return `<div class="top"><h1>Nuestras canciones</h1></div>
+      ${c.length ? c.map(x => `<div class="row" style="cursor:default"><span class="ic">🎵</span><span class="grow"><b>${esc(x.titulo)}</b>${x.artista ? `<br><span class="muted">${esc(x.artista)}</span>` : ''}
+        ${x.nota ? `<br><span class="hand" style="font-size:1.25rem">${esc(x.nota)}</span>` : ''}<br><button class="link" data-act="del" data-c="canciones" data-id="${x.id}">Eliminar</button></span>
+        ${x.link ? `<a class="btn small" href="${esc(x.link)}" target="_blank" rel="noopener">Escuchar</a>` : ''}</div>`).join('')
+        : empty('Agreguen las canciones que son de ustedes, con el enlace de Spotify o YouTube.')}
+      <button class="fab" data-act="form" data-f="cancion" aria-label="Nueva canción">+</button>`;
+  },
+
+  cupones(){
+    const mios = S.cupTab === 'mios';
+    const list = S.data.cupones.filter(c => mios ? c.de!==me() : c.de===me()).sort((a,b)=>(a.canjeado?1:0)-(b.canjeado?1:0) || (b.createdAt||0)-(a.createdAt||0));
+    return `<div class="top"><h1>Cupones</h1></div>
+      <div class="chips"><button class="chip ${mios?'on':''}" data-act="cupTab" data-t="mios">Para mí</button><button class="chip ${!mios?'on':''}" data-act="cupTab" data-t="dados">Los que regalé</button></div>
+      ${list.length ? list.map(c => `<div class="coupon ${c.canjeado?'used':''}"><h3>${esc(c.titulo)}</h3>${c.desc ? `<p style="margin-top:4px">${esc(c.desc)}</p>` : ''}
+        <p class="muted" style="margin-top:6px">${mios ? 'De '+esc(nameOf(c.de)) : 'Para '+esc(partner()?.name || 'mi amor')}${c.canjeado ? ', canjeado el '+fmt(c.canjeadoEn) : ''}</p>
+        <div class="actions">${mios && !c.canjeado ? `<button class="btn red small" data-act="canjear" data-id="${c.id}">Canjear</button>` : ''}${!mios ? `<button class="link" data-act="del" data-c="cupones" data-id="${c.id}">Eliminar</button>` : ''}</div></div>`).join('')
+        : empty(mios ? 'Aún no te han regalado cupones.' : 'Regala un cupón con el botón +.')}
+      <button class="fab" data-act="form" data-f="cupon" aria-label="Regalar cupón">+</button>`;
+  },
+
+  recompensas(){
+    const p = partner(), mine = ptsOf(me());
+    const dias = S.info.inicio ? daysBetween(parseD(S.info.inicio), parseD(ymd())) : 0;
+    const hechos = t => S.data.planes.filter(x=>x.tipo===t && x.estado==='hecho').length;
+    const logros = [['📷','Primera foto', S.data.fotos.length>=1], ['🖼️','50 fotos juntos', S.data.fotos.length>=50], ['📖','10 recuerdos guardados', S.data.recuerdos.length>=10],
+      ['🍷','5 citas cumplidas', hechos('cita')>=5], ['✈️','Primer viaje cumplido', hechos('viaje')>=1], ['🎟️','Primer cupón canjeado', S.data.cupones.some(c=>c.canjeado)],
+      ['💯','100 días juntos', dias>=100], ['💍','Un año juntos', dias>=365], ['🌟','Mil días juntos', dias>=1000]];
+    return `<div class="top"><h1>Recompensas</h1></div>
+      <div class="score"><div><b>${mine}</b>${esc(nameOf(me()))}</div>${p ? `<div><b>${p.pts||0}</b>${esc(p.name||'Mi amor')}</div>` : ''}</div>
+      <p class="muted">Ganan puntos al subir fotos (5), escribir recuerdos (10), cumplir planes (20), regalar cupones (5) y agregar canciones (3).</p>
+      <div class="sec"><h3>Premios para canjear</h3>
+        ${S.data.premios.length ? [...S.data.premios].sort((a,b)=>a.costo-b.costo).map(q => `<div class="row" style="cursor:default"><span class="ic">🎁</span><span class="grow">${esc(q.titulo)}<br><button class="link" data-act="del" data-c="premios" data-id="${q.id}">Eliminar</button></span>
+          <button class="btn small ${mine>=q.costo?'red':''}" data-act="canjearPremio" data-id="${q.id}" ${mine>=q.costo?'':'disabled'}>${q.costo} pts</button></div>`).join('')
+          : empty('Creen premios que puedan canjear con sus puntos.')}
+      </div>
+      <div class="sec"><h3>Logros</h3>${logros.map(([i,t,ok]) => `<div class="row ${ok?'':'locked'}" style="cursor:default"><span class="ic">${ok ? i : '🔒'}</span><span class="grow">${t}</span>${ok ? '<span class="end">✓</span>' : ''}</div>`).join('')}</div>
+      <button class="fab" data-act="form" data-f="premio" aria-label="Nuevo premio">+</button>`;
+  },
+
+  mas(){
+    return `<div class="top"><h1>Más</h1></div>${MAS.map(([v,ic,t]) => `<button class="row" data-act="go" data-v="${v}"><span class="ic">${ic}</span><span class="grow">${t}</span><span class="end">›</span></button>`).join('')}`;
+  },
+
+  ajustes(){
+    const notif = !('Notification' in window) ? 'Este navegador no permite avisos' : Notification.permission==='granted' ? 'Avisos activados' : Notification.permission==='denied' ? 'Avisos bloqueados en el navegador' : '';
+    return `<div class="top"><h1>Ajustes</h1></div>
+      <label for="a-n">Tu nombre</label><input id="a-n" value="${esc(S.data.puntos.find(p=>p.id===me())?.name || '')}" placeholder="Como quieres que aparezca">
+      <label for="a-i">¿Desde cuándo están juntos?</label><input id="a-i" type="date" value="${S.info.inicio || ''}">
+      <div class="actions"><button class="btn red" data-act="saveAjustes">Guardar</button></div>
+      <div class="sec">
+        <button class="row" data-act="cambiarPin"><span class="ic">🔒</span><span class="grow">${S.info.pinHash ? 'Cambiar' : 'Crear'} PIN de fotos ocultas</span></button>
+        ${notif ? `<div class="row" style="cursor:default"><span class="ic">🔔</span><span class="grow">${notif}</span></div>` : `<button class="row" data-act="notif"><span class="ic">🔔</span><span class="grow">Activar avisos de fechas</span></button>`}
+        <button class="row" data-act="logout"><span class="ic">↩</span><span class="grow">Cerrar sesión</span></button>
+      </div>
+      ${DEMO ? '<p class="muted" style="margin-top:14px">Estás en modo demostración.</p>' : ''}`;
+  },
+};
+
+function albumView(fotos, title, oculto){
+  return `<div class="top"><h1>${title}</h1>${oculto ? '<button class="btn ghost small" data-act="bloquear">Bloquear</button>' : '<button class="btn ghost small" data-act="ocultas">🔒 Ocultas</button>'}</div>
+    <input type="file" id="up" accept="image/*" multiple hidden>
+    ${fotos.length ? `<div class="grid">${fotos.map(polaroid).join('')}</div>` : empty(oculto ? 'No hay fotos ocultas. Las que subas aquí solo se ven con el PIN.' : 'Todavía no hay fotos. Toca + para subir las primeras.')}
+    <button class="fab" data-act="subir" aria-label="Subir fotos">+</button>`;
+}
+
+function renderMsgs(){
+  const el = $('#msgs'); if(!el) return;
+  const ms = [...S.data.chat].sort((a,b)=>a.createdAt-b.createdAt);
+  el.innerHTML = ms.length ? ms.map(m => `<div class="msg ${m.by===me()?'me':''}">${esc(m.text)}<small>${hora(m.createdAt)}</small></div>`).join('') : empty('Escríbanse aquí. Solo ustedes dos pueden leerlo.');
+  el.scrollTop = el.scrollHeight;
+}
+
+/* ---------- mapa ---------- */
+function initMap(){
+  const el = $('#map'); if(!el) return;
+  if(!window.L){ el.innerHTML = '<p class="muted" style="padding:20px">No se pudo cargar el mapa. Revisa tu conexión.</p>'; return; }
+  const l = S.info.lugar, fotos = (S.unlocked ? S.data.fotos : visibleFotos()).filter(f => f.lat != null);
+  const center = l ? [l.lat, l.lng] : fotos[0] ? [fotos[0].lat, fotos[0].lng] : [10.6545, -71.6408];
+  map = L.map(el).setView(center, 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
+  if(l) L.marker([l.lat, l.lng], {icon:L.divIcon({className:'', html:'<div class="pin-heart">❤️</div>', iconSize:[34,34], iconAnchor:[17,30]})}).addTo(map).bindPopup(`<b>${esc(l.nombre)}</b><br>Aquí empezó todo`);
+  fotos.forEach(f => L.marker([f.lat, f.lng], {icon:L.divIcon({className:'', html:`<div class="pin-photo"><img src="${f.thumb}" alt=""></div>`, iconSize:[46,46], iconAnchor:[23,23]})}).addTo(map).on('click', () => openFoto(f.id)));
+  map.on('click', e => onMapPick(e.latlng));
+  const pts = [...(l ? [[l.lat, l.lng]] : []), ...fotos.map(f => [f.lat, f.lng])];
+  if(pts.length > 1 && !S.mapPick) map.fitBounds(pts, {padding:[40,40], maxZoom:14});
+  setTimeout(() => map && map.invalidateSize(), 60);
+}
+async function onMapPick({lat, lng}){
+  const p = S.mapPick; if(!p) return;
+  if(p.type === 'foto'){ S.mapPick = null; await Store.update('fotos', p.id, {lat, lng}); toast('Foto ubicada en el mapa'); render(); return; }
+  const l = S.info.lugar || {};
+  modal(`<h2>Donde empezó todo</h2><input type="hidden" id="li-lat" value="${lat}"><input type="hidden" id="li-lng" value="${lng}">
+    <label for="li-n">Nombre del lugar</label><input id="li-n" value="${esc(l.nombre||'')}" placeholder="Ej: la heladería de la esquina">
+    <label for="li-h">Nuestra historia</label><textarea id="li-h" rows="4" placeholder="Cuenta cómo pasó">${esc(l.historia||'')}</textarea>
+    <div class="actions"><button class="btn red" data-act="saveInicio">Guardar</button></div>`);
+}
+
+/* ---------- fotos ---------- */
+async function uploadFiles(files, hidden){
+  if(!files.length) return;
+  toast(`Subiendo ${files.length} foto${files.length>1?'s':''}…`);
+  let ok = 0;
+  for(const file of files){
+    try{
+      const [thumb, full] = await Promise.all([compress(file, 480, .72), compress(file, 1600, .82)]);
+      const id = await Store.add('fotos', {thumb, caption:'', date:ymd(new Date(file.lastModified || Date.now())), hidden, by:me()});
+      await Store.uploadFull(id, await (await fetch(full)).blob()); ok++;
+    }catch(e){ toast('No se pudo subir '+file.name); }
+  }
+  if(ok) award(5*ok, `por ${ok>1?'las fotos':'la foto'}`);
+}
+async function openFoto(id){
+  const f = S.data.fotos.find(x=>x.id===id); if(!f) return;
+  modal(`<img id="fullimg" src="${f.thumb}" alt="" style="width:100%;border-radius:12px;margin-top:20px">
+    <label for="f-cap">Descripción</label><input id="f-cap" value="${esc(f.caption)}" placeholder="Ej: nuestra primera playa">
+    <label for="f-date">Fecha</label><input id="f-date" type="date" value="${f.date||''}">
+    <label class="check"><input type="checkbox" id="f-hid" ${f.hidden?'checked':''}> Foto oculta (solo con PIN)</label>
+    <p class="muted" style="margin-top:8px">${f.lat!=null ? '📍 Está en el mapa' : 'Todavía no está en el mapa'}</p>
+    <div class="actions"><button class="btn red" data-act="saveFoto" data-id="${id}">Guardar</button><button class="btn ghost" data-act="ubicarFoto" data-id="${id}">📍 Ubicar en el mapa</button><button class="btn ghost" data-act="delFoto" data-id="${id}">Eliminar</button></div>`);
+  const url = await Store.fullUrl(id);
+  if(url && $('#fullimg')) $('#fullimg').src = url;
+}
+
+/* ---------- formularios ---------- */
+const FORMS = {
+  recuerdo:{t:'Nuevo recuerdo', f:[['titulo','Título'],['fecha','Fecha','date'],['texto','Qué pasó','textarea']], need:['titulo','fecha'], def:()=>({fecha:ymd()}),
+    async save(v){ await Store.add('recuerdos', {...v, by:me()}); award(10, 'por guardar un recuerdo'); }},
+  fecha:{t:'Fecha importante', f:[['titulo','Qué celebramos'],['fecha','Fecha','date'],['anual','Se repite cada año','check'],['aviso','Avisarnos','select',[['1','1 día antes'],['3','3 días antes'],['7','Una semana antes'],['15','15 días antes'],['30','Un mes antes']]]],
+    need:['titulo','fecha'], def:()=>({anual:true, aviso:'7'}), async save(v){ await Store.add('fechas', {...v, aviso:+v.aviso}); toast('Fecha guardada'); }},
+  plan:{t:'Nuevo plan', f:[['tipo','Tipo','select',Object.entries(TIPOS)],['titulo','Qué vamos a hacer'],['fecha','Fecha','date'],['hora','Hora','time'],['hasta','Hasta (si es un viaje)','date'],['lugar','Dónde'],['notas','Notas','textarea'],['estado','Estado','select',[['idea','Solo una idea'],['planeado','Ya está planeado']]]],
+    need:['titulo'], def:()=>({tipo:S.planTab, estado:'planeado'}), async save(v){ await Store.add('planes', {...v, by:me()}); S.planTab = v.tipo; toast('Plan guardado'); }},
+  cancion:{t:'Nueva canción', f:[['titulo','Canción'],['artista','Artista'],['link','Enlace de Spotify o YouTube','url'],['nota','¿Por qué es nuestra?','textarea']], need:['titulo'],
+    async save(v){ await Store.add('canciones', {...v, by:me()}); award(3, 'por la canción'); }},
+  cupon:{t:'Regalar un cupón', f:[['titulo','Vale por…'],['desc','Detalles','textarea']], need:['titulo'], def:()=>({titulo:'Vale por '}),
+    async save(v){ await Store.add('cupones', {...v, de:me(), canjeado:false}); award(5, 'por regalar un cupón'); }},
+  premio:{t:'Nuevo premio', f:[['titulo','Premio'],['costo','Cuesta (puntos)','number']], need:['titulo'], def:()=>({costo:50}),
+    async save(v){ await Store.add('premios', {titulo:v.titulo, costo:Math.max(1, +v.costo || 50)}); toast('Premio creado'); }},
+};
+function openForm(name){
+  const F = FORMS[name], d = F.def ? F.def() : {};
+  modal(`<h2>${F.t}</h2>${F.f.map(([id,label,type='text',opts]) => {
+    const v = esc(d[id] ?? '');
+    if(type==='textarea') return `<label for="fm-${id}">${label}</label><textarea id="fm-${id}" rows="3">${v}</textarea>`;
+    if(type==='select') return `<label for="fm-${id}">${label}</label><select id="fm-${id}">${opts.map(([k,t]) => `<option value="${k}" ${String(k)===String(d[id])?'selected':''}>${t}</option>`).join('')}</select>`;
+    if(type==='check') return `<label class="check"><input type="checkbox" id="fm-${id}" ${d[id]?'checked':''}> ${label}</label>`;
+    return `<label for="fm-${id}">${label}</label><input id="fm-${id}" type="${type}" value="${v}">`;
+  }).join('')}<div class="actions"><button class="btn red" data-act="save" data-f="${name}">Guardar</button></div>`);
+}
+
+function verPlan(id){
+  const p = S.data.planes.find(x=>x.id===id); if(!p) return;
+  modal(`<h2>${esc(p.titulo)}</h2><p class="muted">${TIPOS[p.tipo]||''}${p.fecha ? ', '+fmt(p.fecha) : ''}${p.hora ? ' a las '+p.hora : ''}${p.hasta ? ' hasta el '+fmt(p.hasta) : ''}</p>
+    ${p.lugar ? `<p style="margin-top:8px">📍 ${esc(p.lugar)}</p>` : ''}${p.notas ? `<p style="margin-top:8px;white-space:pre-wrap">${esc(p.notas)}</p>` : ''}
+    <div class="actions">${p.estado!=='hecho' ? `<button class="btn red" data-act="hecho" data-id="${id}">¡Lo cumplimos!</button>` : ''}
+    ${p.estado==='idea' ? `<button class="btn ghost" data-act="planeado" data-id="${id}">Ya está planeado</button>` : ''}
+    ${p.fecha ? `<a class="btn ghost" href="${gcal(p.titulo, p.fecha, false, p.hora)}" target="_blank" rel="noopener">Google Calendar</a>` : ''}
+    <button class="btn ghost" data-act="del" data-c="planes" data-id="${id}">Eliminar</button></div>`);
+}
+
+/* ---------- acciones ---------- */
+const ACT = {
+  close: closeModal,
+  go: d => { closeModal(); go(d.v); },
+  async demo(d){ S.user = {uid:d.u}; boot(); },
+  async login(){
+    try{ await authApi.login($('#li-e').value.trim(), $('#li-p').value); }
+    catch(e){ $('#li-err').textContent = 'Correo o contraseña incorrectos.'; }
+  },
+  async logout(){ if(map){ map.remove(); map=null; } S.unlocked = false; await authApi.logout(); },
+  foto: d => d.id ? openFoto(d.id) : null,
+  subir: () => $('#up').click(),
+  async ocultas(){
+    if(S.unlocked) return go('ocultas');
+    if(!S.info.pinHash) return ACT.cambiarPin();
+    modal(`<h2>Fotos ocultas</h2><label for="pin">PIN</label><input id="pin" type="password" inputmode="numeric" maxlength="8" autocomplete="off"><div class="actions"><button class="btn red" data-act="abrirPin">Abrir</button></div>`);
+    setTimeout(()=>$('#pin')?.focus(), 50);
+  },
+  cambiarPin(){
+    modal(`<h2>${S.info.pinHash ? 'Cambiar' : 'Crear'} PIN</h2><p class="muted">Lo usarán los dos para ver las fotos ocultas.</p>
+      ${S.info.pinHash ? '<label for="pin-old">PIN actual</label><input id="pin-old" type="password" inputmode="numeric" maxlength="8">' : ''}
+      <label for="pin">PIN nuevo (4 a 8 números)</label><input id="pin" type="password" inputmode="numeric" maxlength="8"><div class="actions"><button class="btn red" data-act="crearPin">Guardar PIN</button></div>`);
+  },
+  async crearPin(){
+    if(S.info.pinHash && await sha($('#pin-old').value) !== S.info.pinHash) return toast('El PIN actual no es correcto');
+    const p = $('#pin').value;
+    if(!/^\d{4,8}$/.test(p)) return toast('El PIN debe tener de 4 a 8 números');
+    await Store.set('pareja', 'info', {pinHash: await sha(p)});
+    S.unlocked = true; closeModal(); toast('PIN guardado'); go('ocultas');
+  },
+  async abrirPin(){
+    if(await sha($('#pin').value) === S.info.pinHash){ S.unlocked = true; closeModal(); go('ocultas'); }
+    else toast('PIN incorrecto');
+  },
+  bloquear(){ S.unlocked = false; go('album'); },
+  async saveFoto(d){
+    await Store.update('fotos', d.id, {caption:$('#f-cap').value.trim(), date:$('#f-date').value, hidden:$('#f-hid').checked});
+    closeModal(); toast('Foto guardada');
+  },
+  ubicarFoto(d){ S.mapPick = {type:'foto', id:d.id}; closeModal(); go('mapa'); },
+  async delFoto(d){
+    if(!confirm('¿Eliminar esta foto para siempre?')) return;
+    await Store.remove('fotos', d.id); await Store.removeFull(d.id); closeModal(); toast('Foto eliminada');
+  },
+  pickInicio(){ S.mapPick = {type:'inicio'}; render(); },
+  cancelPick(){ S.mapPick = null; render(); },
+  miUbic(){
+    if(!navigator.geolocation) return toast('Tu navegador no comparte ubicación');
+    navigator.geolocation.getCurrentPosition(p => onMapPick({lat:p.coords.latitude, lng:p.coords.longitude}), () => toast('No se pudo obtener tu ubicación'));
+  },
+  async saveInicio(){
+    const nombre = $('#li-n').value.trim(); if(!nombre) return toast('Ponle nombre al lugar');
+    await Store.set('pareja', 'info', {lugar:{lat:+$('#li-lat').value, lng:+$('#li-lng').value, nombre, historia:$('#li-h').value.trim()}});
+    S.mapPick = null; closeModal(); toast('Lugar guardado'); render();
+  },
+  form: d => openForm(d.f),
+  async save(d){
+    const F = FORMS[d.f], v = {};
+    F.f.forEach(([id]) => { const el = $('#fm-'+id); v[id] = el.type==='checkbox' ? el.checked : el.value.trim(); });
+    const miss = F.need.find(k => !v[k]);
+    if(miss) return toast('Falta: ' + F.f.find(x=>x[0]===miss)[1].toLowerCase());
+    closeModal(); await F.save(v);
+  },
+  async del(d){ if(!confirm('¿Eliminar?')) return; closeModal(); await Store.remove(d.c, d.id); },
+  verPlan: d => verPlan(d.id),
+  async hecho(d){ await Store.update('planes', d.id, {estado:'hecho', hechoEn:ymd()}); closeModal(); award(20, 'por cumplir un plan'); },
+  async planeado(d){ await Store.update('planes', d.id, {estado:'planeado'}); closeModal(); },
+  planTab(d){ S.planTab = d.t; render(); },
+  cupTab(d){ S.cupTab = d.t; render(); },
+  async canjear(d){
+    const c = S.data.cupones.find(x=>x.id===d.id); if(!c || !confirm(`¿Canjear "${c.titulo}"?`)) return;
+    await Store.update('cupones', d.id, {canjeado:true, canjeadoEn:ymd()});
+    await Store.add('chat', {text:`🎟️ Canjeé el cupón: ${c.titulo}`, by:me()});
+    toast('Cupón canjeado. Ya le avisamos por el chat');
+  },
+  async canjearPremio(d){
+    const q = S.data.premios.find(x=>x.id===d.id); if(!q || ptsOf(me()) < q.costo) return;
+    if(!confirm(`¿Canjear "${q.titulo}" por ${q.costo} puntos?`)) return;
+    await Store.incr('puntos', me(), 'pts', -q.costo);
+    await Store.add('chat', {text:`🏆 Canjeé el premio: ${q.titulo}`, by:me()});
+    toast('Premio canjeado. Ya le avisamos por el chat');
+  },
+  async send(){
+    const el = $('#msg'), text = el.value.trim(); if(!text) return;
+    el.value = ''; await Store.add('chat', {text, by:me()}); el.focus();
+  },
+  async saveAjustes(){
+    const n = $('#a-n').value.trim(), i = $('#a-i').value;
+    if(n) await Store.set('puntos', me(), {name:n});
+    if(i) await Store.set('pareja', 'info', {inicio:i});
+    toast('Cambios guardados');
+  },
+  async notif(){
+    if(!('Notification' in window)) return toast('Este navegador no permite avisos');
+    const p = await Notification.requestPermission();
+    toast(p==='granted' ? 'Avisos activados' : 'No se activaron los avisos');
+    checkAlerts(); render();
+  },
+};
+
+document.addEventListener('click', e => {
+  if(e.target.id === 'modal') return closeModal();
+  const a = e.target.closest('[data-act]');
+  if(a && ACT[a.dataset.act]){ e.preventDefault(); ACT[a.dataset.act](a.dataset, a); }
+});
+document.addEventListener('change', e => { if(e.target.id === 'up'){ uploadFiles([...e.target.files], S.view === 'ocultas'); e.target.value = ''; } });
+document.addEventListener('keydown', e => {
+  if(e.key === 'Enter' && e.target.id === 'msg'){ e.preventDefault(); ACT.send(); }
+  if(e.key === 'Enter' && e.target.id === 'pin'){ e.preventDefault(); (S.info.pinHash && !$('#pin-old') ? ACT.abrirPin : ACT.crearPin)(); }
+  if(e.key === 'Escape') closeModal();
+});
+
+initBackend().catch(e => { $('#app').innerHTML = `<div class="login"><h2>No se pudo conectar</h2><p class="muted">Revisa los datos de Supabase y tu conexión a internet.</p></div>`; });
+</script>
+</body>
+</html>
